@@ -1,0 +1,194 @@
+================================================================================
+                    OTOPARK YÖNETİM SİSTEMİ - KULLANIM KILAVUZU
+================================================================================
+
+PowerShell'de .bat Dosyalarını Çalıştırma
+==========================================
+
+PowerShell'de .bat dosyalarını çalıştırmak için dosya adının başına ".\" eklemeniz gerekir.
+
+ÖRNEK KULLANIM:
+---------------
+
+1. FULLSTACK BAŞLATMA (Backend + Frontend Birlikte)
+   ------------------------------------------------
+   Komut: .\start-fullstack.bat
+   
+   Açıklama: 
+   - Backend ve Frontend'i ayrı pencerelerde başlatır
+   - Backend: http://localhost:8087
+   - Frontend: http://localhost:3000
+   - Her iki uygulama da çalışır durumda olacaktır
+
+
+2. SADECE BACKEND BAŞLATMA
+   -----------------------
+   Komut: .\start-backend.bat
+   
+   Açıklama:
+   - Sadece Spring Boot backend uygulamasını başlatır
+   - Port: 8087
+   - MySQL veritabanına bağlanır
+
+
+3. SADECE FRONTEND BAŞLATMA
+   ------------------------
+   Komut: .\start-frontend.bat
+   
+   Açıklama:
+   - Sadece React frontend uygulamasını başlatır
+   - Port: 3000
+   - Tarayıcı otomatik açılır (BROWSER=none ayarı ile açılmaz)
+
+
+4. PORT KAPATMA (Force Kill)
+   -------------------------
+   Komut: .\kill-ports.bat
+   
+   Açıklama:
+   - Port 8087 (Backend) - Kapatır
+   - Port 3000 (Frontend) - Kapatır
+   - Port 4200 - Kapatır
+   - Port 8080 - Kapatır
+   - Tüm bu portlarda çalışan process'leri zorla sonlandırır
+
+
+================================================================================
+                            DETAYLI KULLANIM SENARYOLARI
+================================================================================
+
+SENARYO 1: İlk Kez Başlatma
+----------------------------
+1. Proje dizinine gidin:
+   cd C:\github_projects\parking_management
+
+2. Fullstack'i başlatın:
+   .\start-fullstack.bat
+
+3. Tarayıcıda http://localhost:3000 adresine gidin
+
+4. Dashboard'da park alanını görsel olarak görebilirsiniz
+
+
+SENARYO 2: Sadece Backend'i Yeniden Başlatma
+---------------------------------------------
+1. Önce portları kapatın:
+   .\kill-ports.bat
+
+2. Backend'i başlatın:
+   .\start-backend.bat
+
+
+SENARYO 3: Port Çakışması Durumunda
+------------------------------------
+1. Portları kapatın:
+   .\kill-ports.bat
+
+2. Birkaç saniye bekleyin
+
+3. Fullstack'i tekrar başlatın:
+   .\start-fullstack.bat
+
+
+SENARYO 4: Sadece Frontend'i Geliştirme Modunda Çalıştırma
+-----------------------------------------------------------
+1. Backend'in çalıştığından emin olun (port 8087)
+
+2. Frontend'i başlatın:
+   .\start-frontend.bat
+
+3. Kod değişiklikleriniz otomatik olarak yansır (Hot Reload)
+
+
+================================================================================
+                            ÖNEMLİ NOTLAR
+================================================================================
+
+1. PowerShell'de Dosya Çalıştırma:
+   - PowerShell güvenlik nedeniyle mevcut dizindeki dosyaları otomatik çalıştırmaz
+   - Mutlaka ".\" öneki ile çalıştırın: .\dosya-adi.bat
+   - Veya tam yol kullanın: C:\github_projects\parking_management\start-fullstack.bat
+
+2. Port Kontrolü:
+   - Portlar zaten kullanılıyorsa hata alırsınız
+   - Önce kill-ports.bat ile portları temizleyin
+   - Sonra uygulamayı başlatın
+
+3. Backend Başlatma:
+   - Backend başlarken MySQL veritabanına bağlanır
+   - MySQL'in çalıştığından emin olun
+   - Veritabanı: otopark
+   - Kullanıcı: root
+   - Şifre: 12345
+
+4. Frontend Başlatma:
+   - İlk başlatmada npm bağımlılıkları yüklenir (biraz zaman alabilir)
+   - Sonraki başlatmalarda daha hızlı açılır
+   - Tarayıcı otomatik açılmaz (BROWSER=none)
+
+5. Fullstack Başlatma:
+   - İki ayrı PowerShell penceresi açılır
+   - Bir pencerede Backend, diğerinde Frontend çalışır
+   - Her iki pencereyi de kapatmadan önce kill-ports.bat kullanın
+
+6. Hata Durumunda:
+   - Portlar kapanmıyorsa: kill-ports.bat'ı yönetici olarak çalıştırın
+   - Backend başlamıyorsa: MySQL'in çalıştığını kontrol edin
+   - Frontend başlamıyorsa: node_modules klasörünü silip npm install yapın
+
+
+================================================================================
+                            HIZLI KOMUTLAR
+================================================================================
+
+Fullstack Başlat:        .\start-fullstack.bat
+Backend Başlat:          .\start-backend.bat
+Frontend Başlat:         .\start-frontend.bat
+Portları Kapat:          .\kill-ports.bat
+
+Backend URL:             http://localhost:8087
+Frontend URL:            http://localhost:3000
+API Endpoint:            http://localhost:8087/api/cars
+
+
+================================================================================
+                            SORUN GİDERME
+================================================================================
+
+SORUN: "The term 'start-fullstack.bat' is not recognized"
+ÇÖZÜM: .\start-fullstack.bat şeklinde çalıştırın (başına .\ ekleyin)
+
+SORUN: "Port already in use"
+ÇÖZÜM: .\kill-ports.bat ile portları kapatın, sonra tekrar başlatın
+
+SORUN: "Cannot connect to database"
+ÇÖZÜM: MySQL servisinin çalıştığını kontrol edin
+
+SORUN: "npm start çalışmıyor"
+ÇÖZÜM: parking-management-system-react klasöründe npm install yapın
+
+SORUN: Backend başlamıyor
+ÇÖZÜM: parking-management-system klasöründe mvn clean install yapın
+
+
+================================================================================
+                            İLETİŞİM VE DESTEK
+================================================================================
+
+Sorun yaşarsanız:
+1. kill-ports.bat ile tüm portları kapatın
+2. Uygulamayı yeniden başlatın
+3. Hata mesajlarını kontrol edin
+4. MySQL ve Java'nın çalıştığından emin olun
+
+
+================================================================================
+                            SON GÜNCELLEME
+================================================================================
+
+Tarih: 2025-12-03
+Versiyon: 1.0
+Durum: Aktif ve Test Edildi
+
+================================================================================
+
